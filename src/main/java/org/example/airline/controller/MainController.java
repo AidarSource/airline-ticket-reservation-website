@@ -1,4 +1,4 @@
-package org.example.airline;
+package org.example.airline.controller;
 
 import org.example.airline.domain.Flight;
 import org.example.airline.repos.FlightRepo;
@@ -19,20 +19,18 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class GreetingController {
+public class MainController {
 
     @Autowired
     private FlightRepo flightRepo;
 
-    @GetMapping("/greeting")
-    public String greeting(
-            @RequestParam(name="", required = false, defaultValue = "world") String name, Map<String, Object> model
+    @GetMapping("/")
+    public String greeting( Map<String, Object> model
     ) {
-        model.put( "name", name );
         return "greeting";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Flight> flights = flightRepo.findAll();
 
@@ -42,7 +40,7 @@ public class GreetingController {
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String add( @RequestParam String fromCity, @RequestParam String toCity,
                        @RequestParam String airplane, @RequestParam float price,
                        @RequestParam String departureDate, @RequestParam String departureTime,
