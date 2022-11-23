@@ -2,7 +2,6 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
-Registration
 ${message!""}
-<@l.login "/registration" />
+<@l.login "/registration" "Registration" />
 </@c.page>
