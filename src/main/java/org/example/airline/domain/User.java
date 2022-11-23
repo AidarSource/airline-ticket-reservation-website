@@ -1,6 +1,7 @@
 package org.example.airline.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,10 +14,29 @@ public class User {
     private String password;
     private boolean active;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
+    @OneToMany
+    List<Flight> tickets;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    public void addToTickets(Flight flight) {
+        tickets.add(flight);
+    }
+
+    public List<Flight> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets( List<Flight> tickets ) {
+        this.tickets = tickets;
+    }
+
+    public boolean isAdmin() {
+        return roles.contains( Role.ADMIN );
+    }
 
     public Long getId() {
         return id;
