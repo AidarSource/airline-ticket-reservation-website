@@ -55,7 +55,7 @@ public class MainController {
 
         model.put("flights", flights);
 
-        return "main";
+        return "redirect:/main";
     }
 
     @PostMapping("filter")
