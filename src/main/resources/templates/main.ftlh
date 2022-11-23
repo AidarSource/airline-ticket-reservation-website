@@ -1,23 +1,6 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/login.ftlh" as l>
 
 <@c.page>
-<div>
-    <@l.logout />
-    <span><a href="/user">User list</a> </span>
-</div>
-<div>
-    <form method="post">
-        <input type="text" name="fromCity" placeholder="Enter departure city" />
-        <input type="text" name="toCity" placeholder="Enter arrival city" />
-        <input type="text" name="airplane" placeholder="Enter airplane name" />
-        <input type="number" name="price" placeholder="Enter price of the flight">
-        <input type="date" name="departureDate">
-        <input type="time" name="departureTime">
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit">Add</button>
-    </form>
-</div>
 <div>Fill out this form to find an airline ticket for you</div>
 <form method="post" action="filter">
     <input type="text" name="fromCity" placeholder="Departure city">
