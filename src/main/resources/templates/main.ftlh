@@ -10,14 +10,21 @@
     <button type="submit">Find</button>
 </form>
 <#list flights as flight>
-<br>Flight id: <b>${flight.id}</b>,
-From city: <b>${flight.fromCity}</b>,
-To city: <b>${flight.toCity}</b>,
-Airplane: <b>${flight.airplane}</b>,
-Departure date: <b>${flight.departureDate}</b>,
-Departure time: <b>${flight.departureTime}</b>,
-Price: <b>${flight.price}</b> tenge.
-<a href="/purchase?id=${flight.id}">Buy ticket</a>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="card-title">From: <b>${flight.fromCity}</b> to <b>${flight.toCity}</b>.
+            <br>Departure: <b>${flight.departureTime}</b>, <b>${flight.departureDate}</b>
+            <br>Arrival: <b>${flight.arrivalTime}</b>, <b>${flight.arrivalDate}</b>
+        </h5>
+    </div>
+    <div class="card-body"
+    <br>Flight id: <b>${flight.id}</b>,
+    Airplane: <b>${flight.airplane}</b>,
+    Price: <b>${flight.price}</b> tenge.<br>
+    <a href="/purchase?id=${flight.id}" class="btn btn-outline-success btn-lg mt-3">Buy</a>
+</div>
+
 <#else>
 None of the flights available right now
 </#list>
