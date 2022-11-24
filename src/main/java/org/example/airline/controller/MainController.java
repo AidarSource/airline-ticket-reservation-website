@@ -40,24 +40,6 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("/main")
-    public String add( @RequestParam String fromCity, @RequestParam String toCity,
-                       @RequestParam String airplane, @RequestParam float price,
-                       @RequestParam String departureDate, @RequestParam String departureTime,
-                       Map<String, Object> model) {
-
-
-        Flight flight = new Flight( fromCity, toCity, airplane, price, departureDate, departureTime );
-
-        flightRepo.save(flight);
-
-        Iterable<Flight> flights = flightRepo.findAll();
-
-        model.put("flights", flights);
-
-        return "redirect:/main";
-    }
-
     @PostMapping("filter")
     public String filter(@RequestParam String toCity, @RequestParam String fromCity,
                          @RequestParam String searchFlightDate, Map<String, Object> model) {
