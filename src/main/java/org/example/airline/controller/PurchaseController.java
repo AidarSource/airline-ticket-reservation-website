@@ -46,6 +46,6 @@ public class PurchaseController {
         user.addToTickets( flight );
         userRepo.save(user);
 
-        return "redirect:/profile";
+        return "redirect:/profile/" + username;
     }
 }
