@@ -22,6 +22,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    public void removeTicket(int id) {
+        for( int i = 0; i < tickets.size(); i++ ) {
+            if( tickets.get( i ).getId() == id ) {
+                tickets.remove( i );
+            }
+        }
+    }
+
     public void addToTickets(Flight flight) {
         tickets.add(flight);
     }
