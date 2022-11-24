@@ -16,14 +16,16 @@ public class Flight {
 
     private String departureDate;
     private String departureTime;
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Date arrival;
+
+    private String arrivalDate;
+    private String arrivalTime;
     private float price;
 
     public Flight() {
     }
 
-    public Flight( String fromCity, String toCity, String airplane, float price, String departureDate, String departureTime) {
+    public Flight( String fromCity, String toCity, String airplane, float price,
+                   String departureDate, String departureTime, String arrivalDate, String arrivalTime) {
         this.fromCity = fromCity;
         this.toCity = toCity;
         this.airplane = airplane;
@@ -36,10 +38,28 @@ public class Flight {
             e.printStackTrace();
         }
         this.departureTime = departureTime;
-        System.out.println(departureTime);
-//        System.out.println(departureDate);
-//        this.departureDate = departureDate;
+        try {
+            this.arrivalDate = myFormat.format( fromUser.parse(arrivalDate) );
+        } catch( ParseException e ) {
+            e.printStackTrace();
+        }
+        this.arrivalTime = arrivalTime;
+    }
 
+    public String getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate( String arrivalDate ) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public String getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime( String arrivalTime ) {
+        this.arrivalTime = arrivalTime;
     }
 
     public Integer getId() {
