@@ -1,6 +1,7 @@
 package org.example.airline.controller;
 
 import org.example.airline.domain.Flight;
+import org.example.airline.domain.User;
 import org.example.airline.repos.FlightRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,14 +27,15 @@ public class FlightController {
         return "flightManagement";
     }
 
-    @PostMapping("flights")
+    @PostMapping("add")
     public String add( @RequestParam String fromCity, @RequestParam String toCity,
                        @RequestParam String airplane, @RequestParam float price,
                        @RequestParam String departureDate, @RequestParam String departureTime,
+                       @RequestParam String arrivalDate, @RequestParam String arrivalTime,
                        Map<String, Object> model) {
 
 
-        Flight flight = new Flight( fromCity, toCity, airplane, price, departureDate, departureTime );
+        Flight flight = new Flight( fromCity, toCity, airplane, price, departureDate, departureTime, arrivalDate, arrivalTime );
 
         flightRepo.save(flight);
 
@@ -42,5 +44,15 @@ public class FlightController {
         model.put("flights", flights);
 
         return "redirect:/main";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam int ticketId) {
+
+        Flight flight = flightRepo.findById( ticketId );
+
+        flightRepo.delete( flight );
+
+        return "redirect:/flights";
     }
 }
