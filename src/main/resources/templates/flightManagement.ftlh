@@ -40,22 +40,38 @@
 </div>
 <#list flights as flight>
 
-<div class="card mt-4">
+<div class="card mt-5">
+    <form method="post" action="/save">
     <div class="card-header">
-        <h5 class="card-title">From: <b>${flight.fromCity}</b> to <b>${flight.toCity}</b>.
-            <br>Departure: <b>${flight.departureTime}</b>, <b>${flight.departureDate}</b>
-            <br>Arrival: <b>${flight.arrivalTime}</b>, <b>${flight.arrivalDate}</b>
+        <h5 class="card-title">
+            From: <input type="text" name="fromCity" value="${flight.fromCity}"> to <input type="text" name="toCity" value="${flight.toCity}">
+            <br>Departure: <input type="text" name="departureTime" value="${flight.departureTime}"> : <input type="text" name="departureDate" value="${flight.departureDate}">
+            <br>Arrival: <input type="text" name="arrivalTime" value="${flight.arrivalTime}"> : <input type="text" name="arrivalDate" value="${flight.arrivalDate}">
         </h5>
     </div>
-    <div class="card-body"
-    <br>Flight id: <b>${flight.id}</b>,
-    Airplane: <b>${flight.airplane}</b>,
-    Price: <b>${flight.price}</b> tenge.<br>
-    <form method="post" action="/delete">
-        <input type="hidden" name="ticketId" value="${flight.id}"/>
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-outline-danger mt-3">Delete</button>
+    <div class="card-body">
+        <h5>
+            <br>Flight id: <b>${flight.id}</b>,
+            <input type="hidden" name="flightId" value="${flight.id}">
+            Airplane: <input type="text" name="airplane" value="${flight.airplane}">
+            Current price: ${flight.price} KZT, enter new price if needed <input type="number" step="any" name="price" value="${flight.price}">
+        </h5>
+        <div class="mt-5 me-5" style="width:400px;">
+            <div style="float: left; width: 130px">
+
+                    <input type="hidden" value="${_csrf.token}" name="_csrf">
+                    <button type="submit" class="btn btn-outline-success btn-lg">Save</button>
+            </div>
+            <div style="float: right; width: 225px">
+                <form method="post" action="/delete">
+                    <input type="hidden" name="ticketId" value="${flight.id}"/>
+                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-outline-danger btn-lg">Delete</button>
+                </form>
+            </div>
+        </div>
     </form>
+    </div>
 </div>
 
 <#else>
