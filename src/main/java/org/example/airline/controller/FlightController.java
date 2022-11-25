@@ -27,7 +27,7 @@ public class FlightController {
         return "flightManagement";
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public String add( @RequestParam String fromCity, @RequestParam String toCity,
                        @RequestParam String airplane, @RequestParam float price,
                        @RequestParam String departureDate, @RequestParam String departureTime,
@@ -52,6 +52,27 @@ public class FlightController {
         Flight flight = flightRepo.findById( ticketId );
 
         flightRepo.delete( flight );
+
+        return "redirect:/flights";
+    }
+
+    @PostMapping("/save")
+    public String save(@RequestParam String fromCity, @RequestParam String toCity, @RequestParam String departureTime,
+                       @RequestParam String departureDate, @RequestParam String arrivalTime, @RequestParam String arrivalDate,
+                       @RequestParam int flightId, @RequestParam String airplane, @RequestParam float price) {
+
+        Flight flight = flightRepo.findById( flightId );
+
+        flight.setFromCity( fromCity );
+        flight.setToCity( toCity );
+        flight.setDepartureTime( departureTime );
+        flight.setDepartureDate( departureDate );
+        flight.setArrivalTime( arrivalTime );
+        flight.setArrivalDate( arrivalDate );
+        flight.setAirplane( airplane );
+        flight.setPrice( price );
+
+        flightRepo.save( flight );
 
         return "redirect:/flights";
     }
