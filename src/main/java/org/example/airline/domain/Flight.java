@@ -19,12 +19,12 @@ public class Flight {
 
     private String arrivalDate;
     private String arrivalTime;
-    private float price;
+    private int price;
 
     public Flight() {
     }
 
-    public Flight( String fromCity, String toCity, String airplane, float price,
+    public Flight( String fromCity, String toCity, String airplane, int price,
                    String departureDate, String departureTime, String arrivalDate, String arrivalTime) {
         this.fromCity = fromCity;
         this.toCity = toCity;
@@ -51,7 +51,14 @@ public class Flight {
     }
 
     public void setArrivalDate( String arrivalDate ) {
-        this.arrivalDate = arrivalDate;
+        SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            this.arrivalDate = myFormat.format( fromUser.parse( arrivalDate ) );
+        } catch( ParseException e ) {
+            System.out.println(e);
+        }
     }
 
     public String getArrivalTime() {
@@ -83,7 +90,14 @@ public class Flight {
     }
 
     public void setDepartureDate( String departureDate ) {
-        this.departureDate = departureDate;
+        SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            this.departureDate = myFormat.format( fromUser.parse( departureDate ) );
+        } catch( ParseException e ) {
+            System.out.println(e);
+        }
     }
 
     public String getAirplane() {
@@ -94,7 +108,7 @@ public class Flight {
         return price;
     }
 
-    public void setPrice( float price ) {
+    public void setPrice( int price ) {
         this.price = price;
     }
 
