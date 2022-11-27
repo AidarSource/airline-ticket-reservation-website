@@ -38,8 +38,6 @@ public class PurchaseController {
     public String process( @RequestParam String username,
                            @RequestParam Integer flightId ) {
 
-        System.out.println(username);
-        System.out.println(flightId);
         User user = userRepo.findByUsername( username );
         Flight flight = flightRepo.findById( flightId );
 
