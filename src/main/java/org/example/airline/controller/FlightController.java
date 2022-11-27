@@ -29,7 +29,7 @@ public class FlightController {
 
     @PostMapping("/add")
     public String add( @RequestParam String fromCity, @RequestParam String toCity,
-                       @RequestParam String airplane, @RequestParam float price,
+                       @RequestParam String airplane, @RequestParam int price,
                        @RequestParam String departureDate, @RequestParam String departureTime,
                        @RequestParam String arrivalDate, @RequestParam String arrivalTime,
                        Map<String, Object> model) {
@@ -59,7 +59,7 @@ public class FlightController {
     @PostMapping("/save")
     public String save(@RequestParam String fromCity, @RequestParam String toCity, @RequestParam String departureTime,
                        @RequestParam String departureDate, @RequestParam String arrivalTime, @RequestParam String arrivalDate,
-                       @RequestParam int flightId, @RequestParam String airplane, @RequestParam float price) {
+                       @RequestParam int flightId, @RequestParam String airplane, @RequestParam String price) {
 
         Flight flight = flightRepo.findById( flightId );
 
@@ -70,7 +70,8 @@ public class FlightController {
         flight.setArrivalTime( arrivalTime );
         flight.setArrivalDate( arrivalDate );
         flight.setAirplane( airplane );
-        flight.setPrice( price );
+
+        flight.setPrice( Integer.parseInt( price.replace( ",", "" ) ) );
 
         flightRepo.save( flight );
 

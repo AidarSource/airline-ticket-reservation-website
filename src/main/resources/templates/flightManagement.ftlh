@@ -45,8 +45,8 @@
     <div class="card-header">
         <h5 class="card-title">
             From: <input type="text" name="fromCity" value="${flight.fromCity}"> to <input type="text" name="toCity" value="${flight.toCity}">
-            <br>Departure: <input type="text" name="departureTime" value="${flight.departureTime}"> : <input type="text" name="departureDate" value="${flight.departureDate}">
-            <br>Arrival: <input type="text" name="arrivalTime" value="${flight.arrivalTime}"> : <input type="text" name="arrivalDate" value="${flight.arrivalDate}">
+            <br>Departure: <input type="time" name="departureTime" value="${flight.departureTime}"> : Current departure date: ${flight.departureDate} <input type="date" name="departureDate" value="${flight.departureDate}">
+            <br>Arrival: <input type="time" name="arrivalTime" value="${flight.arrivalTime}"> : Current arrival date: ${flight.arrivalDate} <input type="date" name="arrivalDate" value="${flight.arrivalDate}">
         </h5>
     </div>
     <div class="card-body">
@@ -54,7 +54,7 @@
             <br>Flight id: <b>${flight.id}</b>,
             <input type="hidden" name="flightId" value="${flight.id}">
             Airplane: <input type="text" name="airplane" value="${flight.airplane}">
-            Current price: ${flight.price} KZT, enter new price if needed <input type="number" step="any" name="price" value="${flight.price}">
+            Price: <input type="text" name="price" value="${flight.price}" >
         </h5>
         <div class="mt-5 me-5" style="width:400px;">
             <div style="float: left; width: 130px">
@@ -71,11 +71,13 @@
             </div>
         </div>
     </form>
-    </div>
 </div>
-
+<br>
+</div>
 <#else>
 <br><br><br>
 None of the flights available right now
 </#list>
 </@c.page>
+
+<br><br><br><br>
