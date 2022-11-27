@@ -59,8 +59,9 @@
         <div class="mt-5 me-5" style="width:400px;">
             <div style="float: left; width: 130px">
 
-                    <input type="hidden" value="${_csrf.token}" name="_csrf">
-                    <button type="submit" class="btn btn-outline-success btn-lg">Save</button>
+                <input type="hidden" value="${_csrf.token}" name="_csrf">
+                <button type="submit" class="btn btn-outline-success btn-lg">Save</button>
+                </form>
             </div>
             <div style="float: right; width: 225px">
                 <form method="post" action="/delete">
@@ -70,7 +71,6 @@
                 </form>
             </div>
         </div>
-    </form>
 </div>
 <br>
 </div>
