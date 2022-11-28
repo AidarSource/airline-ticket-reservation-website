@@ -1,9 +1,10 @@
 package org.example.airline.controller;
 
 import org.example.airline.domain.Flight;
-import org.example.airline.domain.User;
 import org.example.airline.repos.FlightRepo;
+import org.example.airline.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
+//@GetMapping("flights")
 public class FlightController {
 
     @Autowired
     private FlightRepo flightRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("flights")
     public String main(Map<String, Object> model) {
@@ -47,10 +52,9 @@ public class FlightController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam int ticketId) {
+    public String delete(@RequestParam @Param("ticketId") int ticketId) {
 
         Flight flight = flightRepo.findById( ticketId );
-
         flightRepo.delete( flight );
 
         return "redirect:/flights";

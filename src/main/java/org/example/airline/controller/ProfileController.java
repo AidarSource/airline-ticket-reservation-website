@@ -1,6 +1,5 @@
 package org.example.airline.controller;
 
-import org.example.airline.domain.Flight;
 import org.example.airline.domain.User;
 import org.example.airline.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
