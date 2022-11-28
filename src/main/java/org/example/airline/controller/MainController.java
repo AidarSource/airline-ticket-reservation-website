@@ -40,7 +40,7 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("filter")
+    @GetMapping("filter")
     public String filter(@RequestParam String toCity, @RequestParam String fromCity,
                          @RequestParam String searchFlightDate, Map<String, Object> model) {
 
