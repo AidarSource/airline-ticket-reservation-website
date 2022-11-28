@@ -1,7 +1,5 @@
 package org.example.airline.domain;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +22,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public User( String username, String password ) {
-        this.username = username;
-        this.password = password;
-    }
 
     public void removeTicket( int id) {
         for( int i = 0; i < tickets.size(); i++ ) {

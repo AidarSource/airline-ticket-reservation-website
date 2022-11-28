@@ -40,7 +40,7 @@ public class FlightEntityTest {
     @Test
     public void delete_all_flights() {
         entityManager.persist( new Flight("Almaty", "Astana", "Airbus A380", 12000,
-                "2022-12-19", "08:10", "2022-12-19", "09:40") );
+                "2022-19-12", "08:10", "2022-12-19", "09:40") );
         entityManager.persist( new Flight("Astana", "Almaty", "Airbus A380", 12000,
                 "2022-12-19", "08:10", "2022-12-19", "09:40") );
 
@@ -52,11 +52,11 @@ public class FlightEntityTest {
     @Test
     public void find_all_flights() {
         Flight flight1 = new Flight("Almaty", "Astana", "Airbus A380", 12000,
-                "2022-12-19", "08:10", "2022-12-19", "09:40");
+                "2022-12-19", "18:10", "2022-12-19", "19:40");
         entityManager.persist( flight1 );
 
         Flight flight2 = new Flight("Astana", "Almaty", "Airbus A380", 12000,
-                "2022-12-19", "08:10", "2022-12-19", "09:40");
+                "2022-12-19", "18:10", "2022-12-19", "19:40");
         entityManager.persist( flight2 );
 
         Iterable<Flight> flights = flightRepo.findAll();
