@@ -1,30 +1,34 @@
 package org.example.airline.controller;
 
-import org.example.airline.domain.Flight;
-import org.example.airline.domain.User;
-import org.example.airline.repos.FlightRepo;
-import org.example.airline.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.airline.entity.Flight;
+import org.example.airline.entity.User;
+import org.example.airline.service.FlightService;
+import org.example.airline.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class PurchaseController {
 
-    @Autowired
-    private FlightRepo flightRepo;
+    private final FlightService flightService;
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserService userService;
+
+    public PurchaseController( FlightService flightService, UserService userService ) {
+        this.flightService = flightService;
+        this.userService = userService;
+    }
+
 
     @GetMapping("/purchase")
-    public String purchase( @RequestParam(name = "id", required = false, defaultValue = "1234") String id, Map<String, Object> model ) {
+    public String purchase( @RequestParam(name = "id") Long id, Map<String, Object> model ) {
 
-        Flight flight = flightRepo.findById( Integer.parseInt( id ) );
+        Optional<Flight> flight = flightService.findById( id );
 
         model.put("flight", flight);
 
@@ -33,13 +37,14 @@ public class PurchaseController {
 
     @PostMapping("/purchase")
     public String process( @RequestParam String username,
-                           @RequestParam Integer flightId ) {
+                           @RequestParam Long flightId ) {
 
-        User user = userRepo.findByUsername( username );
-        Flight flight = flightRepo.findById( flightId );
+        User user = userService.findByUsername( username );
+        Optional<Flight> flight = flightService.findById( flightId );
 
-        user.addToTickets( flight );
-        userRepo.save(user);
+        //user.addToTickets( flight );
+        flight.ifPresent( x -> user.addToTickets( Optional.of( x ) ) );
+        userService.save(user);
 
         return "redirect:/profile/" + username;
     }
