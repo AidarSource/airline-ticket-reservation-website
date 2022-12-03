@@ -1,8 +1,9 @@
 package org.example.airline.controller;
 
-import org.example.airline.domain.Role;
-import org.example.airline.domain.User;
-import org.example.airline.repos.UserRepo;
+import org.example.airline.entity.Role;
+import org.example.airline.entity.User;
+import org.example.airline.repos.UserRepository;
+import org.example.airline.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/user")
 @PreAuthorize( "hasAuthority('ADMIN')" )
 public class UserController {
-    @Autowired
-    private UserRepo userRepo;
+
+    private final UserService userService;
+
+    public UserController( UserService userService ) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public String userList( Model model) {
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAllUsers());
 
         return "userList";
     }
@@ -53,7 +58,7 @@ public class UserController {
             }
         }
 
-        userRepo.save(user);
+        userService.save(user);
 
         return "redirect:/user";
     }
