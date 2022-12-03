@@ -10,11 +10,11 @@
 <div class="card mt-4">
     <div class="card-header">
         <h5 class="card-title">From: <b>${ticket.fromCity}</b> to <b>${ticket.toCity}</b>.
-            <br>Departure: <b>${ticket.departureTime}</b>, <b>${ticket.departureDate}</b>
-            <br>Arrival: <b>${ticket.arrivalTime}</b>, <b>${ticket.arrivalDate}</b>
+            <br>Departure: <b>${ticket.departureDate}</b>
+            <br>Arrival: <b>${ticket.arrivalDate}</b>
         </h5>
     </div>
-    <div class="card-body"
+    <div class="card-body">
     <br>Flight id: <b>${ticket.id}</b>,
     Airplane: <b>${ticket.airplane}</b>,
     Price: <b>${ticket.price}</b> tenge.<br>

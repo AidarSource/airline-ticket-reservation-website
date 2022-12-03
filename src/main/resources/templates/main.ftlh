@@ -2,7 +2,7 @@
 
 <@c.page>
 <div>Fill out this form to find an airline ticket for you</div>
-<form method="post" action="filter">
+<form method="get" action="filter">
     <input type="text" name="fromCity" placeholder="Departure city">
     <input type="text" name="toCity" placeholder="Arrival city">
     <input type="date" name="searchFlightDate">
@@ -14,11 +14,11 @@
 <div class="card mt-4">
     <div class="card-header">
         <h5 class="card-title">From: <b>${flight.fromCity}</b> to <b>${flight.toCity}</b>.
-            <br>Departure: <b>${flight.departureTime}</b>, <b>${flight.departureDate}</b>
-            <br>Arrival: <b>${flight.arrivalTime}</b>, <b>${flight.arrivalDate}</b>
+            <br>Departure: <b>${flight.departureDate}</b>
+            <br>Arrival: <b>${flight.arrivalDate}</b>
         </h5>
     </div>
-    <div class="card-body"
+    <div class="card-body">
     <br>Flight id: <b>${flight.id}</b>,
     Airplane: <b>${flight.airplane}</b>,
     Price: <b>${flight.price}</b> tenge.<br>
