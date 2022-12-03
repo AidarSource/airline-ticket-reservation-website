@@ -1,31 +1,31 @@
 package org.example.airline.controller;
 
-import org.example.airline.domain.Flight;
-import org.example.airline.repos.FlightRepo;
-import org.example.airline.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.airline.domain.FlightTicket;
+import org.example.airline.entity.Flight;
+import org.example.airline.service.FlightService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 //@GetMapping("flights")
 public class FlightController {
 
-    @Autowired
-    private FlightRepo flightRepo;
+    private final FlightService flightService;
 
-    @Autowired
-    private UserRepo userRepo;
+    public FlightController( FlightService flightService ) {
+        this.flightService = flightService;
+    }
 
     @GetMapping("flights")
     public String main(Map<String, Object> model) {
-        Iterable<Flight> flights = flightRepo.findAll();
-
+        Iterable<Flight> flights = flightService.findAllFlights();
 
         model.put("flights", flights);
 
@@ -33,18 +33,14 @@ public class FlightController {
     }
 
     @PostMapping("/add")
-    public String add( @RequestParam String fromCity, @RequestParam String toCity,
-                       @RequestParam String airplane, @RequestParam int price,
-                       @RequestParam String departureDate, @RequestParam String departureTime,
-                       @RequestParam String arrivalDate, @RequestParam String arrivalTime,
-                       Map<String, Object> model) {
+    public String add( FlightTicket flightTicket, Map<String, Object> model) {
 
+        Flight flight = new Flight( flightTicket.getFromCity(), flightTicket.getToCity(), flightTicket.getAirplane(),
+                Integer.parseInt( flightTicket.getPrice() ), flightTicket.getDepartureDate(), flightTicket.getArrivalDate() );
 
-        Flight flight = new Flight( fromCity, toCity, airplane, price, departureDate, departureTime, arrivalDate, arrivalTime );
+        flightService.save( Optional.of( flight ) );
 
-        flightRepo.save(flight);
-
-        Iterable<Flight> flights = flightRepo.findAll();
+        Iterable<Flight> flights = flightService.findAllFlights();
 
         model.put("flights", flights);
 
@@ -52,32 +48,27 @@ public class FlightController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam @Param("ticketId") int ticketId) {
+    public String delete(@RequestParam @Param("ticketId") Long ticketId) {
 
-        Flight flight = flightRepo.findById( ticketId );
-        flightRepo.delete( flight );
+        Optional<Flight> flight = flightService.findById( ticketId );
+        flightService.delete( flight );
 
         return "redirect:/flights";
     }
 
     @PostMapping("/save")
-    public String save(@RequestParam String fromCity, @RequestParam String toCity, @RequestParam String departureTime,
-                       @RequestParam String departureDate, @RequestParam String arrivalTime, @RequestParam String arrivalDate,
-                       @RequestParam int flightId, @RequestParam String airplane, @RequestParam String price) {
+    public String save( FlightTicket flightTicket, @RequestParam Long flightId) {
 
-        Flight flight = flightRepo.findById( flightId );
+        Optional<Flight> flight = flightService.findById( flightId );
 
-        flight.setFromCity( fromCity );
-        flight.setToCity( toCity );
-        flight.setDepartureTime( departureTime );
-        flight.setDepartureDate( departureDate );
-        flight.setArrivalTime( arrivalTime );
-        flight.setArrivalDate( arrivalDate );
-        flight.setAirplane( airplane );
+        flight.ifPresent( x -> x.setFromCity( flightTicket.getFromCity() ) );
+        flight.ifPresent( x -> x.setToCity( flightTicket.getToCity() ) );
+        flight.ifPresent( x -> x.setDepartureDate( flightTicket.getDepartureDate() ) );
+        flight.ifPresent( x -> x.setArrivalDate( flightTicket.getArrivalDate() ) );
+        flight.ifPresent( x -> x.setAirplane( flightTicket.getAirplane() ) );
+        flight.ifPresent( x -> x.setPrice( Integer.parseInt( flightTicket.getPrice().replace( ",", "" ) ) ) );
 
-        flight.setPrice( Integer.parseInt( price.replace( ",", "" ) ) );
-
-        flightRepo.save( flight );
+        flightService.save( flight );
 
         return "redirect:/flights";
     }
