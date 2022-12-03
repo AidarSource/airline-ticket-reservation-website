@@ -23,15 +23,11 @@
         </li>
         <li class="list-group-item">
             <label>Departure date:</label>
-            <input type="date" name="departureDate">
-            <label>Departure time:</label>
-            <input type="time" name="departureTime">
+            <input type="datetime-local" name="departureDate">
         </li>
         <li class="list-group-item">
             <label>Arrival date:</label>
-            <input type="date" name="arrivalDate">
-            <label>Arrival time:</label>
-            <input type="time" name="arrivalTime">
+            <input type="datetime-local" name="arrivalDate">
         </li>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary mt-3" style="width: 50rem;">Add</button>
@@ -45,8 +41,8 @@
     <div class="card-header">
         <h5 class="card-title">
             From: <input type="text" name="fromCity" value="${flight.fromCity}"> to <input type="text" name="toCity" value="${flight.toCity}">
-            <br>Departure: <input type="time" name="departureTime" value="${flight.departureTime}"> : Current departure date: ${flight.departureDate} <input type="date" name="departureDate" value="${flight.departureDate}">
-            <br>Arrival: <input type="time" name="arrivalTime" value="${flight.arrivalTime}"> : Current arrival date: ${flight.arrivalDate} <input type="date" name="arrivalDate" value="${flight.arrivalDate}">
+            <br>Current departure date: ${flight.departureDate} <input type="datetime-local" name="departureDate" value="${flight.departureDate}">
+            <br>Current arrival date: ${flight.arrivalDate} <input type="datetime-local" name="arrivalDate" value="${flight.arrivalDate}">
         </h5>
     </div>
     <div class="card-body">
