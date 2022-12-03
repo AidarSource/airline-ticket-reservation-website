@@ -1,9 +1,8 @@
 package org.example.airline.controller;
 
-import org.example.airline.domain.Role;
-import org.example.airline.domain.User;
-import org.example.airline.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.airline.entity.Role;
+import org.example.airline.entity.User;
+import org.example.airline.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,12 @@ import java.util.Map;
 
 @Controller
 public class RegistrationController {
-    @Autowired
-    private UserRepo userRepo;
+
+    private final UserService userService;
+
+    public RegistrationController( UserService userService ) {
+        this.userService = userService;
+    }
 
     @GetMapping("/registration")
     public String registration() {
@@ -23,7 +26,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser( User user, Map<String, Object> model) {
-        User userFromDb = userRepo.findByUsername( user.getUsername() );
+        User userFromDb = userService.findByUsername( user.getUsername() );
 
         if(userFromDb != null) {
             model.put("message", "This user already exists");
@@ -32,7 +35,7 @@ public class RegistrationController {
 
         user.setActive( true );
         user.setRoles( Collections.singleton( Role.USER) );
-        userRepo.save(user);
+        userService.save(user);
 
         return "redirect:/login";
     }
