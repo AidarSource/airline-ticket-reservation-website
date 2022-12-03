@@ -1,8 +1,7 @@
 package org.example.airline.controller;
 
-import org.example.airline.domain.User;
-import org.example.airline.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.airline.entity.User;
+import org.example.airline.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ProfileController {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserService userService;
 
-    User user;
+    public ProfileController( UserService userService ) {
+        this.userService = userService;
+    }
 
     @GetMapping("/profile/{username}")
     public String profile( @PathVariable String username, Model model) {
 
-        User user = userRepo.findByUsername( username );
+        var user = userService.findByUsername( username );
 
         model.addAttribute( "tickets", user.getTickets() );
 
@@ -30,11 +30,11 @@ public class ProfileController {
 
     @PostMapping("/refund")
     public String refund(@RequestParam String username, @RequestParam int ticketId) {
-        User user = userRepo.findByUsername( username );
+        User user = userService.findByUsername( username );
 
         user.removeTicket( ticketId );
 
-        userRepo.save( user );
+        userService.save( user );
 
         return "redirect:/profile/" + username;
     }
