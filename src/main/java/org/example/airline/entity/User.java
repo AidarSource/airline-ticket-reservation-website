@@ -1,7 +1,10 @@
-package org.example.airline.domain;
+package org.example.airline.entity;
+
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -14,7 +17,7 @@ public class User {
     private String password;
     private boolean active;
 
-    @OneToMany
+    @OneToMany()
     List<Flight> tickets;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -31,8 +34,8 @@ public class User {
         }
     }
 
-    public void addToTickets(Flight flight) {
-        tickets.add(flight);
+    public void addToTickets( Optional<Flight> flight) {
+        flight.ifPresent( x -> tickets.add(x) );
     }
 
     public List<Flight> getTickets() {

@@ -1,4 +1,4 @@
-package org.example.airline.domain;
+package org.example.airline.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 
