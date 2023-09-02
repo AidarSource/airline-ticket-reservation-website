@@ -1,6 +1,10 @@
 package org.example.airline.controller;
 
+import org.example.airline.entity.Flight;
+import org.example.airline.entity.Ticket;
 import org.example.airline.entity.User;
+import org.example.airline.service.FlightService;
+import org.example.airline.service.TicketService;
 import org.example.airline.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProfileController {
 
     private final UserService userService;
+    private final TicketService ticketService;
+    private final FlightService flightService;
 
-    public ProfileController( UserService userService ) {
+    public ProfileController( UserService userService, TicketService ticketService, FlightService flightService ) {
         this.userService = userService;
+        this.ticketService = ticketService;
+        this.flightService = flightService;
     }
 
     @GetMapping("/profile/{username}")
@@ -29,12 +37,17 @@ public class ProfileController {
     }
 
     @PostMapping("/refund")
-    public String refund(@RequestParam String username, @RequestParam int ticketId) {
-        User user = userService.findByUsername( username );
+    public String refund(@RequestParam String username, @RequestParam Long ticketId) {
 
-        user.removeTicket( ticketId );
+        Ticket ticket = ticketService.findById( ticketId ).orElseThrow();
 
-        userService.save( user );
+        User user = ticket.getUser();
+        Flight flight = ticket.getFlight();
+
+        user.getTickets().remove(ticket);
+        flight.getTickets().remove(ticket);
+
+        ticketService.deleteById( ticketId );
 
         return "redirect:/profile/" + username;
     }

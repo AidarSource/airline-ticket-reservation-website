@@ -1,3 +1,5 @@
+<#import "/spring.ftl" as spring>
+
 <#macro page>
 <!DOCTYPE html>
 <html lang="en">

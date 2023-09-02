@@ -1,13 +1,13 @@
 package org.example.airline.controller;
 
 import org.example.airline.domain.FlightTicket;
+import org.example.airline.dto.FlightDTO;
 import org.example.airline.entity.Flight;
 import org.example.airline.service.FlightService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
@@ -25,7 +25,7 @@ public class FlightController {
 
     @GetMapping("flights")
     public String main(Map<String, Object> model) {
-        Iterable<Flight> flights = flightService.findAllFlights();
+        Iterable<FlightDTO> flights = flightService.findAllFlights();
 
         model.put("flights", flights);
 
@@ -40,7 +40,7 @@ public class FlightController {
 
         flightService.save( Optional.of( flight ) );
 
-        Iterable<Flight> flights = flightService.findAllFlights();
+        Iterable<FlightDTO> flights = flightService.findAllFlights();
 
         model.put("flights", flights);
 

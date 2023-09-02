@@ -1,10 +1,6 @@
 package org.example.airline.entity;
 
-import org.springframework.data.jpa.repository.Query;
-
 import javax.persistence.*;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -17,32 +13,19 @@ public class User {
     private String password;
     private boolean active;
 
-    @OneToMany()
-    List<Flight> tickets;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Ticket> tickets;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-
-    public void removeTicket( int id) {
-        for( int i = 0; i < tickets.size(); i++ ) {
-            if( tickets.get( i ).getId() == id ) {
-                tickets.remove( i );
-            }
-        }
-    }
-
-    public void addToTickets( Optional<Flight> flight) {
-        flight.ifPresent( x -> tickets.add(x) );
-    }
-
-    public List<Flight> getTickets() {
+    public Set<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets( List<Flight> tickets ) {
+    public void setTickets( Set<Ticket> tickets ) {
         this.tickets = tickets;
     }
 

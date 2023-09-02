@@ -1,12 +1,12 @@
-version: "3"
+version: "4"
 services:
-  springapp:
+  airlineweb:
     build: .
-    container_name: springapp
+    container_name: airlineweb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/YOURDB
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/airline
     ports:
-      - 8000:8080
+      - 8080:8080
     restart: always
     depends_on:
       - db
@@ -14,9 +14,9 @@ services:
     image: postgres
     container_name: db
     environment:
-      - POSTGRES_USER=YOURUSR
-      - POSTGRES_PASSWORD=YOURPASS
-      - POSTGRES_DB=YOURDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=airline
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - 5000:5432

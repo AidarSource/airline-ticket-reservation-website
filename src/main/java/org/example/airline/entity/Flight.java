@@ -2,11 +2,9 @@ package org.example.airline.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Flight {
@@ -23,6 +21,9 @@ public class Flight {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime arrivalDate;
+
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
+    private Set<Ticket> tickets;
 
     private int price;
 
@@ -41,6 +42,14 @@ public class Flight {
 
     public LocalDateTime getDepartureDate() {
         return departureDate;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets( Set<Ticket> tickets ) {
+        this.tickets = tickets;
     }
 
     public void setDepartureDate( LocalDateTime departureDate ) {
@@ -68,7 +77,7 @@ public class Flight {
         return airplane;
     }
 
-    public float getPrice() {
+    public int getPrice() {
         return price;
     }
 

@@ -2,9 +2,7 @@ package org.example.airline.controller;
 
 import org.example.airline.entity.Role;
 import org.example.airline.entity.User;
-import org.example.airline.repos.UserRepository;
 import org.example.airline.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

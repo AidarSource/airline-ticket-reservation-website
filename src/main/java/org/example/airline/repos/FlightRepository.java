@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface FlightRepository extends CrudRepository<Flight, Long> {
-    //Optional<Flight> findById(Long id);
-    List<Flight> findByFromCityAndToCityAndDepartureDate(String fromCity, String toCity, LocalDateTime departureDate);
+    List<Flight> findByFromCityAndToCityAndDepartureDateBetween(String fromCity, String toCity,
+                                                                LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<Flight> findByFromCityAndToCity(String fromCity, String toCity);
 }

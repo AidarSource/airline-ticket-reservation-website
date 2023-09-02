@@ -3,5 +3,5 @@
 
 <@c.page>
 ${message!""}
-<@l.login "/registration" "Registration" />
+<@l.login "/registration" "Тіркелу" />
 </@c.page>
